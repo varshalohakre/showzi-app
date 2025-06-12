@@ -7,7 +7,7 @@ import Home from './container/Home';
 
 const App = () => {
   return (
-    <GoogleOAuthProvider clientId="512883960325-fm39fsngbv50q3ih93t64t6jcjjdhtrf.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="979315982180-vfnp18i4m7vkr5nfa9k9jpr8kr77mt6b.apps.googleusercontent.com">
       <Routes>
           <Route path="login" element={<Login/>}/>
           <Route path="/*" element={<Home/>}/>
