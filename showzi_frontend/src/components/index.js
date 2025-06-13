@@ -9,8 +9,8 @@ export { default as Search } from './Search';
  */
 // components/index.js
 export { default as Navbar } from './Navbar';
-export { default as Feed } from './Feed';
-export { default as PinDetail } from './PinDetail';
+export { default as Feed } from './feed';
+export { default as PinDetail } from './Pindetail';
 export { default as CreatePin } from './CreatePin';
 export { default as Search } from './Search';
 export { default as Sidebar } from './Sidebar';
