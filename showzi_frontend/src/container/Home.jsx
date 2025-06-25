@@ -1,7 +1,7 @@
  import React, {useState,useRef,useEffect} from 'react'
 import {HiMenu } from 'react-icons/hi';
 import {AiFillCloseCircle} from 'react-icons/ai';
-import {Link,Route,Routes} from 'react-router-dom';
+import {Link,Route,Routes, useNavigate} from 'react-router-dom';
 import { Sidebar, UserProfile } from '../components';
 import {client } from '../client';
 import Pins from './pins'; // make sure ./Pins.jsx exists and exports default
@@ -14,7 +14,8 @@ console.log('typeof Sidebar:', typeof Sidebar);
 
 const Home = () => {
   const [ToggleSidebar, setToggleSidebar] = useState(false);
-  const [user, setUser]  = useState(null)
+  const [user, setUser]  = useState(null);
+  const [showDropdown, setShowDropdown] = useState(false);
   const userInfo = localStorage.getItem('user') !== 'undefined'? JSON.parse(localStorage.getItem('user')): localStorage.clear();
   const scrollRef = useRef(null);
   
@@ -30,16 +31,12 @@ const Home = () => {
     scrollRef.current.scrollTo(0,0)
   }, [])
   
-  console.log(user);
-  console.log(user?.image);
-  console.log(userInfo);
  
-
 
   return (
     <div className='flex bg-gray-50 md:flex-row flex-col h-screen transition-height duration-75 ease-out '>
-      {/* DESKTOP SIDEBAR - FIXED: Added userInfo prop */
-     /*  <div className='hidden md:flex h-screen flex-initial'>
+      {/* DESKTOP SIDEBAR - FIXED: Added userInfo prop */}
+       <div className='hidden md:flex h-screen flex-initial'>
         <Sidebar 
           user={user && user}
           userInfo={userInfo}
@@ -47,7 +44,9 @@ const Home = () => {
        
       </div>
       
+
       {/* MOBILE HEADER */}
+      
       <div className='flex  md:hidden  flex-row'>
         <div className='p-2 w-full flex flex-row justify-between items-center shadow-md'>
           <HiMenu fontSize={40} className='cursor-pointer' onClick={() => setToggleSidebar(true) }/>
@@ -57,6 +56,7 @@ const Home = () => {
           <Link to={`user-profile/${user?._id}`}>
             <img src={userInfo?.picture} alt="user-profile" className='w-9 h-9 rounded-full'/>
           </Link>
+         
         </div>
         
         {/* MOBILE SIDEBAR */}
