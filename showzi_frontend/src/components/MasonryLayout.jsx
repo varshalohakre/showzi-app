@@ -12,7 +12,6 @@ const breakpointObj = {
 };
 
 const MasonryLayout = ({ pins }) => {
-  console.log('MasonryLayout received pins:', pins);
   
   if (!pins || pins.length === 0) {
     return (

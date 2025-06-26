@@ -14,22 +14,20 @@ const Feed = () => {
 
   useEffect(() => {
     setLoading(true);
+    
     if(categoryId){
-      console.log("inside feed useffect")
       const query = searchQuery(categoryId);
      
      
       client.fetch(query)
       .then((data) =>  {
         setpins(data);
-        console.log(data,"khikhi")
         setLoading(false);
       })
     }else{
       client.fetch(feedQuery)
          .then((data) => {
            setpins(data);
-           console.log(data)
            setLoading(false);
          } )
     }

@@ -17,7 +17,7 @@ const Spinner = () => (
   </div>
 );
 
-const CreatePin = ({ user, userInfo }) => {
+const CreatePin = ({ user }) => {
   const [title, setTitle] = useState('');
   const [about, setAbout] = useState('');
   const [loading, setLoading] = useState(false);
@@ -27,6 +27,8 @@ const CreatePin = ({ user, userInfo }) => {
   const [imageAsset, setImageAsset] = useState(null);
   const [wrongImageType, setWrongImageType] = useState(false);
    const [showalert, setshowalert] = useState(false);
+
+   
 
   const uploadImage = (e) => {
     const selectedFile = e.target.files[0];
@@ -106,6 +108,9 @@ const CreatePin = ({ user, userInfo }) => {
       },
       category
     };
+
+    console.log(doc);
+    
 
     setLoading(true);
     client
@@ -220,9 +225,9 @@ const CreatePin = ({ user, userInfo }) => {
 
           {user && (
             <div className="flex gap-3 items-center bg-gray-50 rounded-lg p-3">
-              {userInfo?.picture ? (
+              {user?.image ? (
                 <img
-                  src={userInfo.picture}
+                  src={user?.image}
                   className="w-12 h-12 rounded-full object-cover"
                   alt="user-profile"
                 />

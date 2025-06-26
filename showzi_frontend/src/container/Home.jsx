@@ -9,37 +9,36 @@ import Pins from './pins'; // make sure ./Pins.jsx exists and exports default
 import { userQuery } from '../utlis/data';
 import logo from '../assets/logo.png';
 
-console.log('Sidebar:', Sidebar);
-console.log('typeof Sidebar:', typeof Sidebar);
 
 const Home = () => {
   const [ToggleSidebar, setToggleSidebar] = useState(false);
   const [user, setUser]  = useState(null);
-  const [showDropdown, setShowDropdown] = useState(false);
   const userInfo = localStorage.getItem('user') !== 'undefined'? JSON.parse(localStorage.getItem('user')): localStorage.clear();
   const scrollRef = useRef(null);
   
   useEffect(() => {
-    const query = userQuery(userInfo?.googleId);
+    const query = userQuery(userInfo?.sub);
     client.fetch(query)
     .then((data) => {
+      // console.log(data[0],"userData");
+      
       setUser(data[0]);
     })
-  }, []);
+  }, [userInfo?.sub]);
 
   useEffect(() => {
     scrollRef.current.scrollTo(0,0)
   }, [])
   
- 
+  console.log(user?.image,"user state");
+  
 
   return (
     <div className='flex bg-gray-50 md:flex-row flex-col h-screen transition-height duration-75 ease-out '>
       {/* DESKTOP SIDEBAR - FIXED: Added userInfo prop */}
        <div className='hidden md:flex h-screen flex-initial'>
         <Sidebar 
-          user={user && user}
-          userInfo={userInfo}
+          user={user}
         />
        
       </div>
@@ -54,7 +53,7 @@ const Home = () => {
             <img src={logo} alt="logo" className='w-28'/>
           </Link>
           <Link to={`user-profile/${user?._id}`}>
-            <img src={userInfo?.picture} alt="user-profile" className='w-9 h-9 rounded-full'/>
+            <img src={user?.image} alt="user-profile" className='w-9 h-9 rounded-full'/>
           </Link>
          
         </div>
@@ -66,9 +65,8 @@ const Home = () => {
               <AiFillCloseCircle fontSize={30} className='cursor-pointer' onClick={()=>setToggleSidebar(false)}/>
             </div>
             <Sidebar 
-              user={user && user} 
+              user={user} 
               closeToggle={setToggleSidebar}
-              userInfo={userInfo} 
             />
           </div>
         )}
@@ -80,7 +78,7 @@ const Home = () => {
         
         <Routes>
           <Route path="/user-profile/:userId" element={<UserProfile/>}/>
-          <Route path="/*" element={<Pins user={user && user} userInfo={userInfo}/>}/>
+          <Route path="/*" element={<Pins user={user}/>}/>
         </Routes>
       </div>
     </div>
