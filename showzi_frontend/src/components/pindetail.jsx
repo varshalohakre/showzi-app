@@ -14,7 +14,7 @@ const PinDetail = ({ user }) => {
   const [pinDetail, setPinDetail] = useState();
   const [comment, setComment] = useState('');
   const [addingComment, setAddingComment] = useState(false);
-
+  
   const fetchPinDetails = () => {
     const query = pinDetailQuery(pinId);
 
@@ -35,6 +35,9 @@ const PinDetail = ({ user }) => {
     fetchPinDetails();
   }, [pinId]);
 
+  console.log(" pinDetail state:", pinDetail);
+
+
   const addComment = () => {
     if (comment) {
       setAddingComment(true);
@@ -51,8 +54,10 @@ const PinDetail = ({ user }) => {
         });
     }
   };
+  
 
   if (!pinDetail) {
+    console.log("pinDetail is undefined or null");
     return (
       <Spinner message="Showing pin" />
     );

@@ -2,7 +2,7 @@ import React from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
-import sharevideo from '../assets/share.mp4';
+import sharevideo from '../assets/login.mp4';
 import logo from '../assets/logo.png';
 import { jwtDecode } from 'jwt-decode';
  // make sure to install it

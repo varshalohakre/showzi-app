@@ -26,11 +26,11 @@ const Home = () => {
     })
   }, [userInfo?.sub]);
 
-  useEffect(() => {
-    scrollRef.current.scrollTo(0,0)
-  }, [])
+  // useEffect(() => {
+  //   scrollRef.current.scrollTo(0,0)
+  // }, [])
   
-  console.log(user?.image,"user state");
+  // console.log(user?.picture,"user state");
   
 
   return (

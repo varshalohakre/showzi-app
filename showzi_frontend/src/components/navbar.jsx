@@ -5,12 +5,12 @@ import { googleLogout } from "@react-oauth/google";
 
 const Navbar = ({ SearchTerm, setSearchTerm, user }) => {
   const navigate = useNavigate();
-  const handleLogout = () => {
-    googleLogout();
-    localStorage.clear();
-    navigate("/login"); // Redirect to login page after logout
-    // Reload the page after logout
-  };
+  // const handleLogout = () => {
+  //   googleLogout();
+  //   localStorage.clear();
+  //   navigate("/login"); // Redirect to login page after logout
+  //   // Reload the page after logout
+  // };
 
   const [showDropdown, setShowDropdown] = React.useState(false);
 
@@ -19,6 +19,7 @@ const Navbar = ({ SearchTerm, setSearchTerm, user }) => {
   };
 
   const handleUserRoute = () => {
+    navigate(`/user-profile/${user?._id}`)
     setShowDropdown((prev) => !prev)
   };
 
@@ -44,7 +45,7 @@ const Navbar = ({ SearchTerm, setSearchTerm, user }) => {
               className="w-14 h-12 rounded-lg"
             />
           </button>
-          {showDropdown && (
+          {/* {showDropdown && (
             <div className="absolute  top-16 right-28 mt-2 w-30 bg-white shadow-lg rounded-lg z-20">
               <button
                 className="w-full text-center px-4 py-2 text-gray-700 hover:bg-red-100 "
@@ -53,7 +54,7 @@ const Navbar = ({ SearchTerm, setSearchTerm, user }) => {
                 Logout
               </button>
             </div>
-          )}
+          )} */}
           
           <button
             onClick={handleCreatePinRoute}
