@@ -210,69 +210,58 @@ const Home = () => {
 export default Home; */
 
 
-
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { HiMenu } from 'react-icons/hi';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import { Sidebar, UserProfile } from '../components';
 import { client } from '../client';
 import Pins from './pins';
-
 import { userQuery } from '../utlis/data';
 import logo from '../assets/logo.png';
 
 const Home = () => {
-  const [ToggleSidebar, setToggleSidebar] = useState(false);
+  const [toggleSidebar, setToggleSidebar] = useState(false);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const scrollRef = useRef(null);
 
-  // Get user info from localStorage
-  const getUserInfo = () => {
+  // ✅ Stable userInfo (prevents ESLint + CI issues)
+  const userInfo = useMemo(() => {
     try {
       const stored = localStorage.getItem('user');
-      if (!stored || stored === 'undefined') {
-        return null;
-      }
+      if (!stored || stored === 'undefined') return null;
       return JSON.parse(stored);
     } catch (error) {
-      console.error('Error parsing user from localStorage:', error);
+      console.error('Invalid user data in localStorage', error);
       localStorage.clear();
       return null;
     }
-  };
-
-  const userInfo = getUserInfo();
+  }, []);
 
   useEffect(() => {
-    // If no valid user info, redirect to login
     if (!userInfo || !userInfo.sub) {
       localStorage.clear();
       navigate('/login', { replace: true });
       return;
     }
 
-    // Fetch user data from Sanity
     const query = userQuery(userInfo.sub);
+
     client
       .fetch(query)
       .then((data) => {
-        if (data && data.length > 0) {
+        if (data?.length) {
           setUser(data[0]);
-        } else {
-          console.log('No user data found in Sanity');
         }
       })
       .catch((error) => {
-        console.error('Error fetching user data:', error);
+        console.error('Failed to fetch user:', error);
       });
-  }, [userInfo?.sub, navigate]);
+  }, [userInfo, navigate]);
 
-  // If userInfo is null, don't render anything (will redirect)
-  if (!userInfo) {
-    return null;
-  }
+  // ⛔ Prevent render before redirect
+  if (!userInfo) return null;
 
   return (
     <div className="flex bg-gray-50 md:flex-row flex-col h-screen transition-height duration-75 ease-out">
@@ -292,7 +281,7 @@ const Home = () => {
           <Link to="/">
             <img src={logo} alt="logo" className="w-28" />
           </Link>
-          <Link to={`user-profile/${user?._id}`}>
+          <Link to={`/user-profile/${user?._id}`}>
             <img
               src={user?.image || userInfo?.picture}
               alt="user-profile"
@@ -302,7 +291,7 @@ const Home = () => {
         </div>
 
         {/* MOBILE SIDEBAR */}
-        {ToggleSidebar && (
+        {toggleSidebar && (
           <div className="fixed w-4/5 bg-white h-screen overflow-y-auto shadow-md z-10 animate-slide-in">
             <div className="absolute w-full flex justify-end items-center p-2">
               <AiFillCloseCircle
