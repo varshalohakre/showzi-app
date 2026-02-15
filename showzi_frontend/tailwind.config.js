@@ -1,7 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'media',
+  content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+
+
   theme: {
     extend: {
       margin: {
@@ -86,9 +88,9 @@ module.exports = {
       pointer: 'pointer',
     },
   },
-  variants: {
-    // backgroundColor: ['active'],
-    extend: {},
-  },
+  // variants: {
+  //   // backgroundColor: ['active'],
+  //   extend: {},
+  // },
   plugins: [],
 };
