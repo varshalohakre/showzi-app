@@ -230,7 +230,10 @@ const UserProfile = () => {
                 onClick={() => setShowLogoutConfirm(true)}
                 title="Logout"
               >
-                <AiOutlineLogout color="red" fontSize={21} />
+               <button className="flex items-center gap-2">
+  <AiOutlineLogout color="red" fontSize={21} />
+  <span className="text-red-500 font-semibold">Logout</span>
+</button>
               </button>
             </div>
           )}
