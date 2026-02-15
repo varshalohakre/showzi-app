@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { data, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { client } from "../client";
 import MasonryLayout from './MasonryLayout';
 import Spinner from './Spinner';
